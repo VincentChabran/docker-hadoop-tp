@@ -1,0 +1,127 @@
+services:
+   namenode:
+      image: bde2020/hadoop-namenode:2.0.0-hadoop3.2.1-java8
+      container_name: namenode
+      restart: always
+      ports:
+         - 9870:9870
+         - 9000:9000
+      volumes:
+         - hadoop_namenode:/hadoop/dfs/name
+         - ./data:/data
+      environment:
+         - CLUSTER_NAME=test
+      env_file:
+         - ./hadoop.env
+
+   datanode:
+      image: bde2020/hadoop-datanode:2.0.0-hadoop3.2.1-java8
+      container_name: datanode
+      restart: always
+      volumes:
+         - hadoop_datanode:/hadoop/dfs/data
+      environment:
+         SERVICE_PRECONDITION: "namenode:9870"
+      ports:
+         - 9864:9864
+      env_file:
+         - ./hadoop.env
+
+   resourcemanager:
+      image: bde2020/hadoop-resourcemanager:2.0.0-hadoop3.2.1-java8
+      container_name: resourcemanager
+      restart: always
+      environment:
+         SERVICE_PRECONDITION: "namenode:9000 namenode:9870 datanode:9864"
+      env_file:
+         - ./hadoop.env
+
+   nodemanager1:
+      image: bde2020/hadoop-nodemanager:2.0.0-hadoop3.2.1-java8
+      container_name: nodemanager
+      restart: always
+      environment:
+         SERVICE_PRECONDITION: "namenode:9000 namenode:9870 datanode:9864 resourcemanager:8088"
+      env_file:
+         - ./hadoop.env
+
+   historyserver:
+      image: bde2020/hadoop-historyserver:2.0.0-hadoop3.2.1-java8
+      container_name: historyserver
+      restart: always
+      environment:
+         SERVICE_PRECONDITION: "namenode:9000 namenode:9870 datanode:9864 resourcemanager:8088"
+      volumes:
+         - hadoop_historyserver:/hadoop/yarn/timeline
+      env_file:
+         - ./hadoop.env
+
+   hive-server:
+      image: bde2020/hive:2.3.2-postgresql-metastore
+      container_name: hive-server
+      env_file:
+         - ./hadoop.env
+      environment:
+         HIVE_CORE_CONF_javax_jdo_option_ConnectionURL: "jdbc:postgresql://hive-metastore/metastore"
+         SERVICE_PRECONDITION: "hive-metastore:9083"
+      ports:
+         - "10000:10000"
+
+   hive-metastore:
+      image: bde2020/hive:2.3.2-postgresql-metastore
+      container_name: hive-metastore
+      env_file:
+         - ./hadoop.env
+      command: /opt/hive/bin/hive --service metastore
+      environment:
+         SERVICE_PRECONDITION: "namenode:9870 datanode:9864 hive-metastore-postgresql:5432"
+      ports:
+         - "9083:9083"
+
+   hive-metastore-postgresql:
+      image: bde2020/hive-metastore-postgresql:2.3.0
+
+   presto-coordinator:
+      image: shawnzhu/prestodb:0.181
+      ports:
+         - "8080:8080"
+
+   mongodb:
+      image: mongo:latest
+      container_name: mongodb
+      restart: always
+      ports:
+         - 27016:27017
+      volumes:
+         - mongo_data:/data/db
+
+   mongo-express:
+      image: mongo-express:latest
+      container_name: mongo-express
+      restart: always
+      ports:
+         - 8081:8081
+      environment:
+         - ME_CONFIG_MONGODB_SERVER=mongodb
+      depends_on:
+         - mongodb
+
+   # oracle-nosql:
+   #    image: ghcr.io/oracle/nosql:latest-ce
+   #    container_name: oracle-nosql
+   #    restart: always
+   #    environment:
+   #       - KVSTORE=kvstore
+   #       - HOSTNAME=oracle-nosql
+   #       - HA_HOSTNAME=oracle-nosql
+   #    ports:
+   #       - 8080:8080
+   #    volumes:
+   #       - oracle_nosql_data:/data
+
+volumes:
+   hadoop_namenode:
+   hadoop_datanode:
+   hadoop_historyserver:
+   mongo_data:
+   # oracle_nosql_data:
