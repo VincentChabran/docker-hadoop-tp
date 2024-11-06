@@ -2,6 +2,10 @@
 import subprocess
 import sys
 from app.mongo.script import load_data_to_mongo
+from app.cassandraa.cassandra_client import create_keyspace, create_table, push_data_to_cassandra, \
+    get_cassandra_session, \
+    close_connection, drop_all_keyspaces
+
 
 def load_to_mongo():
    print("Chargement des données dans MongoDB...")
@@ -22,6 +26,23 @@ def import_csv_to_hdfs():
 
 if __name__ == "__main__":
    print("Début de l'orchestration des tâches")
+   # Crée une session Cassandra
+   session = get_cassandra_session()
+   print("Session Cassandra créée.")
+
+   create_keyspace(session)
+   print("Keyspace créé.")
+
+   create_table(session)
+   print("Table créée.")
+   csv_file_path = "data/Catalogue.csv"
+   # Pousse les données du CSV vers Cassandra
+   push_data_to_cassandra(csv_file_path, session)
+
+   # Ferme la connexion à Cassandra
+   close_connection(session) # Assurez-vous que le chemin soit correct
+
+
 
    load_to_mongo()
    import_csv_to_hdfs()

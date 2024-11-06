@@ -106,6 +106,23 @@ services:
       depends_on:
          - mongodb
 
+   # Serveur Cassandra pour le stockage NoSQL
+   cassandra:
+      image: cassandra:latest
+      container_name: cassandraa
+      restart: always
+      environment:
+         CASSANDRA_CLUSTER_NAME: "Test Cluster"
+         CASSANDRA_NUM_TOKENS: "256"
+         CASSANDRA_SEEDS: "cassandraa"
+      ports:
+         - "9042:9042" # Port pour CQL (Cassandra Query Language)
+      volumes:
+         - cassandra_data:/var/lib/cassandraa
+         - ./data:/data  # Monté à partir du dossier actuel
+
+
+
    # oracle-nosql:
    #    image: ghcr.io/oracle/nosql:latest-ce
    #    container_name: oracle-nosql
@@ -124,4 +141,5 @@ volumes:
    hadoop_datanode:
    hadoop_historyserver:
    mongo_data:
+   cassandra_data:
    # oracle_nosql_data:
