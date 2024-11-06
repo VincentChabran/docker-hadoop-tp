@@ -23,6 +23,25 @@ def import_csv_to_hdfs():
         print("Erreur lors de l'importation dans HDFS :")
         print(e.stderr)
 
+def import_csv_to_hive():
+    try:
+        result = subprocess.run(["bash", "app/hive/import_client_to_hive.sh"], capture_output=True, text=True, check=True)
+        print("Résultat de l'importation dans Hive :")
+        print(result.stdout)
+        
+    except subprocess.CalledProcessError as e:
+        print("Erreur lors de l'importation dans Hive :")
+        print(e.stderr)
+
+def create_external_table_immat():
+    try:
+        result = subprocess.run(["bash", "app/hive/create_extern_table_immatriculations.sh"], capture_output=True, text=True, check=True)
+        print("Table externe Immatriculations créée dans Hive avec succès :")
+        print(result.stdout)
+    except subprocess.CalledProcessError as e:
+        print("Erreur lors de la création de la table Immatriculations dans Hive :")
+        print(e.stderr)
+
 
 if __name__ == "__main__":
    print("Début de l'orchestration des tâches")
@@ -46,5 +65,7 @@ if __name__ == "__main__":
 
    load_to_mongo()
    import_csv_to_hdfs()
+   import_csv_to_hive()
+#    create_external_table_immat()
 
    print("Orchestration terminée.")
