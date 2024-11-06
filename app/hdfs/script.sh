@@ -1,8 +1,4 @@
-#!/bin/bash
-
-CSV_FILE="Immatriculations.csv"          
-LOCAL_PATH="/data/$CSV_FILE"       
-HDFS_PATH="/data/$CSV_FILE"         
+#!/bin/bash      
 
 # Accéder au conteneur namenode et exécuter les commandes HDFS
 docker exec -it namenode /bin/bash -c "
@@ -10,7 +6,9 @@ docker exec -it namenode /bin/bash -c "
     hdfs dfs -mkdir -p /data
 
     echo 'Importation du fichier CSV dans HDFS...'
-    hdfs dfs -put -f $LOCAL_PATH $HDFS_PATH
+    hdfs dfs -put -f /data/Immatriculations.csv /data/Immatriculations.csv
+    hdfs dfs -put -f /data/CO2.csv /data/CO2.csv
+    hdfs dfs -put -f /data/Clients_0.csv /data/Clients_0.csv
 
     echo 'Vérification de l'importation :'
     hdfs dfs -ls /data
