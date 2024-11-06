@@ -10,15 +10,12 @@ def load_to_mongo():
 
 def import_csv_to_hdfs():
     try:
-        # Exécute le script shell pour importer le fichier CSV dans HDFS
         result = subprocess.run(["bash", "app/hdfs/script.sh"], capture_output=True, text=True, check=True)
         
-        # Affiche la sortie du script shell
         print("Résultat de l'importation dans HDFS :")
         print(result.stdout)
         
     except subprocess.CalledProcessError as e:
-        # Affiche l'erreur en cas d'échec
         print("Erreur lors de l'importation dans HDFS :")
         print(e.stderr)
 
