@@ -43,22 +43,22 @@ def create_external_table_immat():
 
 
 if __name__ == "__main__":
-   print("Début de l'orchestration des tâches")
-   # Crée une session Cassandra
-   session = get_cassandra_session()
-   print("Session Cassandra créée.")
+#    print("Début de l'orchestration des tâches")
+#    # Crée une session Cassandra
+#    session = get_cassandra_session()
+#    print("Session Cassandra créée.")
 
-   create_keyspace(session)
-   print("Keyspace créé.")
+#    create_keyspace(session)
+#    print("Keyspace créé.")
 
-   create_table(session)
-   print("Table créée.")
-   csv_file_path = "data/Catalogue.csv"
-   # Pousse les données du CSV vers Cassandra
-   push_data_to_cassandra(csv_file_path, session)
+#    create_table(session)
+#    print("Table créée.")
+#    csv_file_path = "data/Catalogue.csv"
+#    # Pousse les données du CSV vers Cassandra
+#    push_data_to_cassandra(csv_file_path, session)
 
-   # Ferme la connexion à Cassandra
-   close_connection(session) # Assurez-vous que le chemin soit correct
+#    # Ferme la connexion à Cassandra
+#    close_connection(session) # Assurez-vous que le chemin soit correct
 
 
 
