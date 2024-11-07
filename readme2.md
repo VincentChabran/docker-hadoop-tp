@@ -32,6 +32,15 @@ select * from client_data limit 10;
 docker exec -it  bash
 
 
+```
+
+# Pyhton env
+
+```bash
+
+python3.11 -m venv env
+
+source env/bin/activate
 
 ```
 
