@@ -66,6 +66,10 @@ services:
          SERVICE_PRECONDITION: "hive-metastore:9083"
       ports:
          - "10000:10000"
+      volumes:
+         - ./hive/conf/jar/mongo-hadoop-core-2.0.2.jar:/opt/hive/lib/mongo-hadoop-core-2.0.2.jar
+         - ./hive/conf/jar/mongo-hadoop-hive-2.0.2.jar:/opt/hive/lib/mongo-hadoop-hive-2.0.2.jar
+         - ./hive/conf/jar/mongo-java-driver-3.12.10.jar:/opt/hive/lib/mongo-java-driver-3.12.10.jar
 
    hive-metastore:
       image: bde2020/hive:2.3.2-postgresql-metastore

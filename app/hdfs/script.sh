@@ -14,4 +14,4 @@ docker exec -it namenode /bin/bash -c "
     hdfs dfs -ls /data
 "
 
-echo "Importation terminée."
+echo "Importation Hdfs terminée."

@@ -1,6 +1,5 @@
-# main.py
+
 import subprocess
-import sys
 from app.mongo.script import load_data_to_mongo
 
 def load_to_mongo():
