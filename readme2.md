@@ -38,7 +38,7 @@ docker exec -it  bash
 
 ```bash
 
-python3.11 -m venv env
+python3.11 -m venv env # Créee l'env
 
 source env/bin/activate
 
