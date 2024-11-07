@@ -60,11 +60,9 @@ if __name__ == "__main__":
 #    # Ferme la connexion à Cassandra
 #    close_connection(session) # Assurez-vous que le chemin soit correct
 
-
-
    load_to_mongo()
    import_csv_to_hdfs()
    import_csv_to_hive()
-#    create_external_table_immat()
+   create_external_table_immat()
 
    print("Orchestration terminée.")

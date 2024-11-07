@@ -1,10 +1,10 @@
 #!/bin/bash
 
-CSV_DIRECTORY="/data"
+CSV_DIRECTORY="/data/immatriculations"
 IMMAT_TABLE_NAME="immatriculations_data"
 DB_NAME="client"
 
-IMMAT_COLUMNS="immatriculation STRING, marque STRING, nom STRING, puissance INT, longueur STRING, nbplaces INT, nbportes INT, couleur STRING, occasion BOOLEAN, prix INT"
+IMMAT_COLUMNS="immatriculation STRING, marque STRING, nom STRING, puissance STRING, longueur STRING, nbplaces STRING, nbportes STRING, couleur STRING, occasion STRING, prix STRING"
 DELIMITER=","
 
 docker exec -it hive-server bash -c "
