@@ -125,25 +125,9 @@ services:
          - cassandra_data:/var/lib/cassandraa
          - ./data:/data  # Monté à partir du dossier actuel
 
-
-
-   # oracle-nosql:
-   #    image: ghcr.io/oracle/nosql:latest-ce
-   #    container_name: oracle-nosql
-   #    restart: always
-   #    environment:
-   #       - KVSTORE=kvstore
-   #       - HOSTNAME=oracle-nosql
-   #       - HA_HOSTNAME=oracle-nosql
-   #    ports:
-   #       - 8080:8080
-   #    volumes:
-   #       - oracle_nosql_data:/data
-
 volumes:
    hadoop_namenode:
    hadoop_datanode:
    hadoop_historyserver:
    mongo_data:
    cassandra_data:
-   # oracle_nosql_data:
