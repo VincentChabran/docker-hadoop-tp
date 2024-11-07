@@ -42,6 +42,45 @@ def create_external_table_immat():
         print("Erreur lors de la création de la table Immatriculations dans Hive :")
         print(e.stderr)
 
+def run_hive_import_script():
+    try:
+        # Définir le conteneur Hive qui va exécuter le script
+        container_name = "hive-server"
+
+        # Chemin du script à l'intérieur du conteneur Docker
+        script_path_in_container = "/hive_scripts/import_client_to_hive.sh"
+
+        # Commande pour exécuter le script dans le conteneur Hive
+        command = [
+            "docker", "exec", "-it", container_name, "/bin/bash", "-c", f"bash {script_path_in_container}"
+        ]
+
+        # Exécution de la commande Docker
+        result = subprocess.run(command, check=True, capture_output=True, text=True)
+        print("Script Hive exécuté avec succès :", result.stdout)
+    except subprocess.CalledProcessError as e:
+        print("Erreur lors de l'exécution du script Hive :", e.stderr)
+
+def run_spark_job():
+    try:
+        # Définir la commande spark-submit avec les arguments appropriés
+        command = [
+            "/opt/spark/bin/spark-submit",  # Chemin vers l'exécutable spark-submit
+            "--jars",
+            "/opt/spark/jars/spark-cassandra-connector_2.12-3.1.0.jar,/opt/spark/jars/mongo-spark-connector_2.12-3.0.1.jar",
+            "/spark_scripts/cassandra_to_hive.py"  # Chemin vers votre script Spark
+        ]
+
+        # Utiliser subprocess pour exécuter la commande
+        result = subprocess.run(command, check=True, text=True, capture_output=True)
+
+        # Afficher la sortie du job Spark
+        print("Spark job finished successfully.")
+        print(result.stdout)
+    except subprocess.CalledProcessError as e:
+        print("An error occurred while running the Spark job.")
+        print(e.stderr)
+
 
 if __name__ == "__main__":
    print("Début de l'orchestration des tâches")
@@ -54,6 +93,9 @@ if __name__ == "__main__":
 
    create_table(session)
    print("Table créée.")
+
+   # run_hive_import_script();
+   # print("Script Hive pour cassandra exécuté avec succès.")
    csv_file_path = "data/Catalogue.csv"
    # Pousse les données du CSV vers Cassandra
    push_data_to_cassandra(csv_file_path, session)
@@ -61,6 +103,7 @@ if __name__ == "__main__":
    # Ferme la connexion à Cassandra
    close_connection(session) # Assurez-vous que le chemin soit correct
 
+   # run_spark_job();
 
 
    load_to_mongo()

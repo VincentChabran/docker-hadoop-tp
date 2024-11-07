@@ -1,0 +1,14 @@
+<configuration>
+    <property>
+        <name>hive.metastore.uris</name>
+        <value>thrift://hive-metastore:9083</value>
+    </property>
+    <property>
+  <name>hive.metastore.filter.hook</name>
+  <value>org.apache.hadoop.hive.metastore.DefaultMetaStoreFilterHookImpl</value>
+</property>
+    <property>
+        <name>hive.metastore.warehouse.dir</name>
+        <value>/spark-warehouse</value>
+    </property>
+</configuration>
