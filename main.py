@@ -1,6 +1,5 @@
 # main.py
 import subprocess
-import sys
 from app.mongo.script import load_data_to_mongo
 from app.cassandraa.cassandra_client import create_keyspace, create_table, push_data_to_cassandra, \
     get_cassandra_session, \
@@ -94,8 +93,10 @@ if __name__ == "__main__":
    create_table(session)
    print("Table créée.")
 
-   # run_hive_import_script();
-   # print("Script Hive pour cassandra exécuté avec succès.")
+   run_hive_import_script();
+
+   print("Script Hive pour cassandra exécuté avec succès.")
+
    csv_file_path = "data/Catalogue.csv"
    # Pousse les données du CSV vers Cassandra
    push_data_to_cassandra(csv_file_path, session)
@@ -109,6 +110,6 @@ if __name__ == "__main__":
    load_to_mongo()
    import_csv_to_hdfs()
    import_csv_to_hive()
-#    create_external_table_immat()
+   create_external_table_immat()
 
    print("Orchestration terminée.")
