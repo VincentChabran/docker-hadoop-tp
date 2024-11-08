@@ -1,10 +1,10 @@
 #!/bin/bash
 
-CSV_DIRECTORY="/data/immatriculations"
-IMMAT_TABLE_NAME="immatriculations_data"
+CSV_DIRECTORY="/data/co2"
+IMMAT_TABLE_NAME="co2_data"
 DB_NAME="client"
 
-IMMAT_COLUMNS="immatriculation STRING, marque STRING, nom STRING, puissance INT, longueur STRING, nbplaces INT, nbportes INT, couleur STRING, occasion BOOLEAN, prix FLOAT"
+IMMAT_COLUMNS="marque STRING, modele STRING, bonus_malus STRING, rejets_co2 STRING, cout_energie STRING"
 DELIMITER=","
 
 docker exec -it hive-server bash -c "
@@ -18,4 +18,4 @@ docker exec -it hive-server bash -c "
     TBLPROPERTIES (\"skip.header.line.count\"=\"1\");
   '
 "
-echo 'Table externe Immatriculations créée dans Hive.'
+echo 'Table externe Co2 créée dans Hive.'
