@@ -30,7 +30,7 @@ def run_spark_for_monogodb_to_hive():
       result = subprocess.run(exec_bash_cmd + [spark_submit_cmd], check=True, text=True, capture_output=True)
       
       print("Résultat de spark-submit :")
-      # print(result.stdout)
+      print(result.stdout)
 
    except subprocess.CalledProcessError as e:
       print("Erreur lors de l'exécution de la commande :", e)
