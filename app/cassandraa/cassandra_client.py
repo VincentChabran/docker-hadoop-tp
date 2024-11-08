@@ -78,3 +78,28 @@ def close_connection(cluster):
     """
     cluster.shutdown()
 
+
+def execute_cassandra_operations(csv_file_path):
+    """
+    Exécute toutes les opérations nécessaires sur Cassandra : création de keyspace,
+    création de table, et insertion des données depuis un fichier CSV.
+
+    Args:
+        csv_file_path (str): Le chemin du fichier CSV à charger dans Cassandra.
+    """
+    session = get_cassandra_session()
+    print("Session Cassandra créée.")
+
+    try:
+        create_keyspace(session)
+        print("Keyspace créé.")
+
+        create_table(session)
+        print("Table créée.")
+
+        push_data_to_cassandra(csv_file_path, session)
+        print("Données poussées vers Cassandra.")
+
+    finally:
+        close_connection(session)
+        print("Connexion Cassandra fermée.")

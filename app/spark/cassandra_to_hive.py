@@ -7,7 +7,7 @@ spark = SparkSession.builder \
     .appName("Cassandra to Hive") \
     .config("spark.sql.warehouse.dir", "/spark-warehouse") \
     .config("spark.cassandra.connection.host", "cassandra") \
-    .config("spark.sql.warehouse.dir", "hdfs://namenode:8020/spark-warehouse")\
+    .config("spark.sql.warehouse.dir", "hdfs://namenode:9000/spark-warehouse")\
     .config("spark.cassandra.connection.port", "9042") \
     .enableHiveSupport() \
     .getOrCreate()

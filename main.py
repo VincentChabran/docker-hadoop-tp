@@ -4,7 +4,7 @@ import subprocess
 from app.mongo.script import load_data_to_mongo
 from app.cassandraa.cassandra_client import create_keyspace, create_table, push_data_to_cassandra, \
     get_cassandra_session, \
-    close_connection
+    close_connection, execute_cassandra_operations
 
 
 def load_to_mongo():
@@ -90,24 +90,14 @@ def run_spark_job():
 if __name__ == "__main__":
     print("Début de l'orchestration des tâches")
     # Crée une session Cassandra
-    session = get_cassandra_session()
-    print("Session Cassandra créée.")
-
-    create_keyspace(session)
-    print("Keyspace créé.")
-
-    create_table(session)
-    print("Table créée.")
-
-    # run_hive_import_script();
-
 
     csv_file_path = "data/Catalogue.csv"
+    execute_cassandra_operations(csv_file_path)
+
+
     # Pousse les données du CSV vers Cassandra
-    push_data_to_cassandra(csv_file_path, session)
 
     # Ferme la connexion à Cassandra
-    close_connection(session)  # Assurez-vous que le chemin soit correct
 
     run_spark_job();
     print("Script Hive pour cassandra exécuté avec succès.")
