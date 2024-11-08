@@ -7,13 +7,13 @@ spark = SparkSession.builder \
     .appName("Cassandra to Hive") \
     .config("spark.sql.warehouse.dir", "/spark-warehouse") \
     .config("spark.cassandra.connection.host", "cassandra") \
-    .config("spark.sql.warehouse.dir", "hdfs://namenode:9000/spark-warehouse")\
+    .config("spark.sql.warehouse.dir", "hdfs://namenode:8020/spark-warehouse")\
     .config("spark.cassandra.connection.port", "9042") \
     .enableHiveSupport() \
     .getOrCreate()
 
 # Créer la base de données Hive si elle n'existe pas déjà
-spark.sql("DROP TABLE IF EXISTS my_database.cassandra_catalogue")
+spark.sql("CREATE DATABASE IF NOT EXISTS my_database")
 
 # Sélectionner la base de données créée
 spark.catalog.setCurrentDatabase("my_database")
