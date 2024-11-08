@@ -6,6 +6,7 @@ services:
       ports:
          - 9870:9870
          - 9000:9000
+         - 8020:8020
       volumes:
          - hadoop_namenode:/hadoop/dfs/name
          - ./data:/data
@@ -57,15 +58,19 @@ services:
          - ./hadoop.env
 
    hive-server:
-      image: bde2020/hive:2.3.2-postgresql-metastore
-      container_name: hive-server
-      env_file:
-         - ./hadoop.env
-      environment:
-         HIVE_CORE_CONF_javax_jdo_option_ConnectionURL: "jdbc:postgresql://hive-metastore/metastore"
-         SERVICE_PRECONDITION: "hive-metastore:9083"
-      ports:
-         - "10000:10000"
+     build:
+       context: ./app/hive  # Spécifiez le chemin vers le Dockerfile, ici le dossier qui contient votre Dockerfile
+     container_name: hive-server
+     env_file:
+       - ./hadoop.env
+     environment:
+       HIVE_CORE_CONF_javax_jdo_option_ConnectionURL: "jdbc:postgresql://hive-metastore/metastore"
+       SERVICE_PRECONDITION: "hive-metastore:9083"
+     ports:
+       - "10000:10000"
+     volumes:
+       - ./app/hive:/hive_scripts  # Montez le dossier contenant le script dans /hive_scripts
+
 
    hive-metastore:
       image: bde2020/hive:2.3.2-postgresql-metastore
@@ -123,18 +128,35 @@ services:
 
 
 
-   # oracle-nosql:
-   #    image: ghcr.io/oracle/nosql:latest-ce
-   #    container_name: oracle-nosql
-   #    restart: always
-   #    environment:
-   #       - KVSTORE=kvstore
-   #       - HOSTNAME=oracle-nosql
-   #       - HA_HOSTNAME=oracle-nosql
-   #    ports:
-   #       - 8080:8080
-   #    volumes:
-   #       - oracle_nosql_data:/data
+   spark:
+     build:
+       context: ./app/spark  # Dossier contenant le Dockerfile Spark
+     container_name: spark
+     environment:
+       - SPARK_MODE=master
+       - SPARK_RPC_AUTHENTICATION_ENABLED=no
+       - SPARK_RPC_ENCRYPTION_ENABLED=no
+       - SPARK_LOCAL_STORAGE_ENCRYPTION_ENABLED=no
+       - SPARK_SSL_ENABLED=no
+       - ENABLE_INIT_DAEMON=false
+       - ENV SPARK_HOME=/spark
+       - ENV JAVA_HOME=/usr/lib/jvm/java-1.8-openjdk
+       - ENV PATH=$JAVA_HOME/bin:$SPARK_HOME/bin:$PATH
+     env_file:
+       - ./hadoop.env
+     ports:
+       - "4040:4040"
+     volumes:
+       - ./data:/data
+       - ./app/spark:/spark_scripts
+       - ./app/hive/jars:/opt/bitnami/spark/jars  # Volume pour les connecteurs
+       - ./app/hive/hive-site.xml:$SPARK_HOME/conf/hive-site.xml
+     depends_on:
+       - cassandra
+       - mongodb
+       - hive-metastore
+
+
 
 volumes:
    hadoop_namenode:

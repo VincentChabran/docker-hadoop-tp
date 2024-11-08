@@ -78,4 +78,3 @@ def close_connection(cluster):
     """
     cluster.shutdown()
 
-
