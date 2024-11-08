@@ -139,8 +139,8 @@ services:
        - SPARK_LOCAL_STORAGE_ENCRYPTION_ENABLED=no
        - SPARK_SSL_ENABLED=no
        - ENABLE_INIT_DAEMON=false
-       - ENV SPARK_HOME=/spark
-       - ENV JAVA_HOME=/usr/lib/jvm/java-1.8-openjdk
+       - SPARK_HOME=/spark
+       - JAVA_HOME=/usr/lib/jvm/java-1.8-openjdk
        - ENV PATH=$JAVA_HOME/bin:$SPARK_HOME/bin:$PATH
      env_file:
        - ./hadoop.env

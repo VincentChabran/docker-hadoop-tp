@@ -13,7 +13,7 @@ spark = SparkSession.builder \
     .getOrCreate()
 
 # Créer la base de données Hive si elle n'existe pas déjà
-spark.sql("CREATE DATABASE IF NOT EXISTS my_database")
+spark.sql("DROP TABLE IF EXISTS my_database.cassandra_catalogue")
 
 # Sélectionner la base de données créée
 spark.catalog.setCurrentDatabase("my_database")

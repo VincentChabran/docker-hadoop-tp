@@ -69,25 +69,23 @@ def run_hive_import_script():
 
 def run_spark_job():
     try:
-        # Vérifier que le fichier cassandra_to_hive.py existe
-        script_path = "/spark_scripts/cassandra_to_hive.py"
-        if not os.path.exists(script_path):
-            raise FileNotFoundError(f"Le fichier {script_path} est introuvable.")
-
+        # Utiliser le chemin complet vers spark-submit qui fonctionne
         command = [
-            "/opt/spark/bin/spark-submit",
+            "docker", "exec", "spark", "/usr/bin/spark-submit",
             "--jars",
-            "/opt/spark/jars/spark-cassandra-connector_2.12-3.1.0.jar,/opt/spark/jars/mongo-spark-connector_2.12-3.0.1.jar",
-            script_path
+            "/opt/bitnami/spark/jars/spark-cassandra-connector_2.12-3.1.0.jar,/opt/bitnami/spark/jars/mongo-spark-connector_2.12-3.0.1.jar",
+            "/spark_scripts/cassandra_to_hive.py"
         ]
-        result = subprocess.run(command, check=True, text=True, capture_output=True)
+
+        # Remplacer capture_output par stdout et stderr explicites
+        result = subprocess.run(command, check=True, text=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+
         print("Spark job finished successfully.")
         print(result.stdout)
-    except FileNotFoundError as fnf_error:
-        print(fnf_error)
     except subprocess.CalledProcessError as e:
         print("An error occurred while running the Spark job.")
         print(e.stderr)
+
 
 if __name__ == "__main__":
     print("Début de l'orchestration des tâches")
