@@ -4,6 +4,7 @@
 docker exec -it namenode bash
 
 hdfs dfs -ls /data
+hdfs dfs -ls /user/hive/warehouse/concessionnaire.db/
 
 ```
 
@@ -45,11 +46,8 @@ docker cp app/mongo/spark.py spark-master:/spark.py
 
 docker exec -it spark-master /bin/bash
 
-/spark/bin/spark-submit --packages org.mongodb.spark:mongo-spark-connector_2.12:3.0.1 /spark.py
+/spark/bin/spark-submit --packages org.mongodb.spark:mongo-spark-connector_2.12:3.0.1 /spark_mongo.py
 
-
-
-ls /opt/spark/jars
 
 ```
 
