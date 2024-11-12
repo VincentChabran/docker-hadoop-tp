@@ -2,7 +2,7 @@
 
 CSV_DIRECTORY="/data/immatriculations"
 IMMAT_TABLE_NAME="immatriculations_data"
-DB_NAME="client"
+DB_NAME="concessionnaire"
 
 IMMAT_COLUMNS="immatriculation STRING, marque STRING, nom STRING, puissance INT, longueur STRING, nbplaces INT, nbportes INT, couleur STRING, occasion BOOLEAN, prix FLOAT"
 DELIMITER=","

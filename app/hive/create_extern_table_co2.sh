@@ -2,7 +2,7 @@
 
 CSV_DIRECTORY="/data/co2"
 CO2_TABLE_NAME="co2_data"
-DB_NAME="client"
+DB_NAME="concessionnaire"
 
 CO2_COLUMNS="marque STRING, modele STRING, bonus_malus STRING, rejets_co2 STRING, cout_energie STRING"
 DELIMITER=","

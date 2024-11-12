@@ -8,8 +8,8 @@ if __name__ == "__main__":
 
    run_all_setup_from_hdfs()
    run_all_setup_from_hive()
-   orchestration_mongo_task()
-   orchestration_cassandra_task()
+   # orchestration_mongo_task()
+   # orchestration_cassandra_task()
 
 
    print("Orchestration du main terminée.")

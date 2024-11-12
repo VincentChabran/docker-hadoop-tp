@@ -2,7 +2,7 @@
 
 CSV_PATH="/data/clients"
 TABLE_NAME="client_data"
-DB_NAME="client"
+DB_NAME="concessionnaire"
 
 COLUMN_NAMES="age STRING, sexe STRING, taux STRING, situationfamilliale STRING, nbenfantacharge STRING, deuxiemeVoiture STRING, immatriculation STRING"
 DELIMITER=","
