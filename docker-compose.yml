@@ -77,6 +77,7 @@ services:
       volumes:
          - ./jars:/opt/spark/jars
          - ./app/mongo/spark.py:/spark_mongo.py
+         - ./app/mapreduce:/mapreduce
 
    spark-worker-1:
       image: bde2020/spark-worker:3.0.0-hadoop3.2

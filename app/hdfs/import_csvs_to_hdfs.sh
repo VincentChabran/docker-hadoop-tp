@@ -11,7 +11,7 @@ docker exec -it namenode /bin/bash -c "
     hdfs dfs -put -f /data/Immatriculations.csv /data/immatriculations/Immatriculations.csv
 
     echo 'Importation du fichier Catalogue.csv dans HDFS'
-    hdfs dfs -put -f /data/Catalogue.csv /data/immatriculations/Catalogue.csv
+    hdfs dfs -put -f /data/Catalogue.csv /data/catalogue/Catalogue.csv
 
     echo 'Importation du fichier CO2.csv dans HDFS'
     hdfs dfs -put -f /data/CO2.csv /data/co2/CO2.csv
