@@ -19,7 +19,7 @@ def create_external_marketing_table():
 def run_spark_for_monogodb_to_hive():
    print("Lancement du script Spark pour transférer les données de MongoDB vers Hive")
    try:
-      exec_bash_cmd = ["docker", "exec", "-it", "spark-master", "/bin/bash", "-c"]
+      exec_bash_cmd = ["docker", "exec", "-i", "spark-master", "/bin/bash", "-c"]
       
       spark_submit_cmd = (
          "/spark/bin/spark-submit "
