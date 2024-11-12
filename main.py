@@ -11,5 +11,4 @@ if __name__ == "__main__":
    orchestration_mongo_task()
    orchestration_cassandra_task()
 
-
    print("Orchestration du main terminée.")

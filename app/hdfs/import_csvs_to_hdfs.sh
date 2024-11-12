@@ -1,17 +1,16 @@
 #!/bin/bash
 
 docker exec -it namenode /bin/bash -c "
+    echo 'Suppression du répertoire /data dans HDFS s\'il existe déjà'
+    hdfs dfs -rm -r -f /data
+
     echo 'Création des dossiers cibles dans HDFS, s'ils n'existent pas'
     hdfs dfs -mkdir -p /data/immatriculations
-    hdfs dfs -mkdir -p /data/catalogue
     hdfs dfs -mkdir -p /data/co2
     hdfs dfs -mkdir -p /data/clients
 
     echo 'Importation du fichier Immatriculations.csv dans HDFS'
     hdfs dfs -put -f /data/Immatriculations.csv /data/immatriculations/Immatriculations.csv
-
-    echo 'Importation du fichier Catalogue.csv dans HDFS'
-    hdfs dfs -put -f /data/Catalogue.csv /data/catalogue/Catalogue.csv
 
     echo 'Importation du fichier CO2.csv dans HDFS'
     hdfs dfs -put -f /data/CO2.csv /data/co2/CO2.csv
