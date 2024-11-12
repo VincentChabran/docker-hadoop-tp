@@ -5,7 +5,7 @@ CONTAINER_NAME="hive-server"
 SQL_SCRIPT="
 CREATE DATABASE IF NOT EXISTS concessionnaire;
 USE concessionnaire;
-DROP EXTERNAL TABLE IF EXISTS catalogue_table;
+DROP TABLE IF EXISTS catalogue_table;
 
 CREATE EXTERNAL TABLE IF NOT EXISTS catalogue_table (
     id STRING,
