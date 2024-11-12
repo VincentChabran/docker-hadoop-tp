@@ -11,6 +11,7 @@ def import_csvs_to_hdfs():
         print(e.stderr)
 
 def run_all_setup_from_hdfs():
+   print("Orchestration dans HDFS en cours...")
 
    import_csvs_to_hdfs()
 
