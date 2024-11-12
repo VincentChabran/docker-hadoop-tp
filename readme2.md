@@ -29,7 +29,7 @@ show databases;
 
 show tables;
 
-use client;
+use concessionnaire;
 
 select * from client_data limit 10;
 
