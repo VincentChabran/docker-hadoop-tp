@@ -140,6 +140,3 @@ def orchestration_cassandra_task():
     print("**************************************************************")
     print("Fin de l'orchestration des tâches Cassandra")
     print("**************************************************************")
-
-if __name__ == "__main__":
-    orchestration_cassandra_task()
