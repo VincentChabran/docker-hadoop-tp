@@ -125,11 +125,11 @@ def orchestration_cassandra_task():
     # Étape 1 : Charger les données dans Cassandra depuis le fichier CSV
     execute_cassandra_operations("data/Catalogue.csv")
 
-    # Étape 2 : Vérifier et supprimer la table existante si nécessaire
-    check_and_delete_hive_table()
+    # # Étape 2 : Vérifier et supprimer la table existante si nécessaire
+    # check_and_delete_hive_table()
 
-    # Étape 3 : Vérifier et supprimer le répertoire HDFS si nécessaire
-    check_and_delete_hdfs_directory()
+    # # Étape 3 : Vérifier et supprimer le répertoire HDFS si nécessaire
+    # check_and_delete_hdfs_directory()
 
     # Étape 4 : Créer la table externe dans Hive
     create_external_catalogue_table()

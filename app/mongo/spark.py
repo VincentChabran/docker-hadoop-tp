@@ -20,8 +20,8 @@ marketing_df.printSchema()
 
 marketing_df.show(10)
 
-hive_table_path = "hdfs://namenode:9000/user/hive/warehouse/concessionnaire.db/marketing_table"
+hive_table_path = "hdfs://namenode:9000/user/hive/warehouse/concessionnaire.db/marketing_data"
 
-marketing_df.write.format("parquet").mode("append").option("path", hive_table_path).saveAsTable("marketing_table")
+marketing_df.write.format("parquet").mode("append").option("path", hive_table_path).saveAsTable("marketing_data")
 
 spark.stop()

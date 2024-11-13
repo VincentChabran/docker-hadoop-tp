@@ -32,6 +32,7 @@ show tables;
 use concessionnaire;
 
 select * from client_data limit 10;
+select count(*) from marketing_table;
 
 ```
 

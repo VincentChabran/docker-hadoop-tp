@@ -1,9 +1,6 @@
 #!/bin/bash
 
 docker exec -it namenode /bin/bash -c "
-    echo 'Suppression du répertoire /data dans HDFS s\'il existe déjà'
-    hdfs dfs -rm -r -f /data
-
     echo 'Création des dossiers cibles dans HDFS, s'ils n'existent pas'
     hdfs dfs -mkdir -p /data/immatriculations
     hdfs dfs -mkdir -p /data/co2
