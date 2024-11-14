@@ -10,3 +10,20 @@ env
 /.idea/inspectionProfiles/Project_Default.xml
 /.idea/vcs.xml
 /app/*/__pycache__
+
+
+
+# Ignorer le dossier app dans le chemin spécifié
+C:/Projet/docker-hadoop-tp/app
+
+# Ignorer les fichiers et dossiers de cache Python générés
+cassandraa/__pycache__/
+__init__.cpython-311.pyc
+cassandra_client.cpython-311.pyc
+hdfs/__pycache__/
+main.cpython-311.pyc
+hive/__pycache__/
+main.cpython-311.pyc
+mongo/__pycache__/
+load_data_to_mongo.cpython-311.pyc
+main_mongo.cpython-311.pyc
