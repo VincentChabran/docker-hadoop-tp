@@ -57,6 +57,7 @@ docker exec -it spark-master /bin/bash
 
 /spark/bin/spark-submit --packages org.apache.spark:spark-hive_2.12:3.0.1 /mapreduce/show_db.py
 
+ /spark/bin/spark-submit /mapreduce/data_process_for_CO2.py
 
 ```
 
