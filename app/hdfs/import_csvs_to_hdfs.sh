@@ -1,6 +1,6 @@
 #!/bin/bash
 
-docker exec -it namenode /bin/bash -c "
+docker exec -it namenode bash -c "
     echo 'Création des dossiers cibles dans HDFS, s'ils n'existent pas'
     hdfs dfs -mkdir -p /data/immatriculations
     hdfs dfs -mkdir -p /data/co2
