@@ -10,7 +10,7 @@ def delete_hive_table_and_hdfs():
     try:
         # Supprimer la table existante pour éviter les doublons
         drop_table_cmd = (
-            "docker exec -i hive-server /bin/bash -c "
+            "docker exec -it hive-server /bin/bash -c "
             "\"hive -e 'USE concessionnaire; DROP TABLE IF EXISTS catalogue_table;'\""
         )
         result_drop = subprocess.run(drop_table_cmd, capture_output=True, text=True, check=True)
@@ -20,7 +20,7 @@ def delete_hive_table_and_hdfs():
 
         # Supprimer les fichiers HDFS associés (car la table est externe)
         delete_hdfs_cmd = (
-            "docker exec -i namenode /bin/bash -c "
+            "docker exec -it namenode /bin/bash -c "
             "\"hadoop fs -rm -r -f /user/hive/warehouse/concessionnaire.db/catalogue_table\""
         )
         result_delete_hdfs = subprocess.run(delete_hdfs_cmd, capture_output=True, text=True, check=True)
@@ -39,7 +39,7 @@ def create_external_catalogue_table():
     print("Création de la table externe catalogue dans Hive")
     try:
         result = subprocess.run(
-            ["docker", "exec", "-i", "hive-server", "/bin/bash", "-c", "hive -e \"CREATE DATABASE IF NOT EXISTS concessionnaire; USE concessionnaire; DROP TABLE IF EXISTS catalogue_table; CREATE EXTERNAL TABLE IF NOT EXISTS catalogue_table (id STRING, marque STRING, nom STRING, puissance INT, longueur STRING, nbPlaces INT, nbPortes INT, couleur STRING, occasion BOOLEAN, prix FLOAT) STORED AS PARQUET LOCATION '/user/hive/warehouse/concessionnaire.db/catalogue_table';\""],
+            ["docker", "exec", "-it", "hive-server", "/bin/bash", "-c", "hive -e \"CREATE DATABASE IF NOT EXISTS concessionnaire; USE concessionnaire; DROP TABLE IF EXISTS catalogue_table; CREATE EXTERNAL TABLE IF NOT EXISTS catalogue_table (id STRING, marque STRING, nom STRING, puissance INT, longueur STRING, nbPlaces INT, nbPortes INT, couleur STRING, occasion BOOLEAN, prix FLOAT) STORED AS PARQUET LOCATION '/user/hive/warehouse/concessionnaire.db/catalogue_table';\""],
             capture_output=True, text=True, check=True)
         print("Résultat de la création de la table externe Hive :")
         print(result)
@@ -54,7 +54,7 @@ def check_and_delete_hive_table():
     print("Vérification de l'existence de la table Hive et suppression si nécessaire")
     try:
         check_table_cmd = (
-            "docker exec -i hive-server /bin/bash -c "
+            "docker exec -it hive-server /bin/bash -c "
             "\"hive -e 'USE concessionnaire; SHOW TABLES LIKE \\\"catalogue_table\\\";'\""
         )
         result_check = subprocess.run(check_table_cmd, capture_output=True, text=True, check=True)
@@ -73,14 +73,14 @@ def check_and_delete_hdfs_directory():
     print("Vérification de l'existence du répertoire HDFS et suppression si nécessaire")
     try:
         check_hdfs_cmd = (
-            "docker exec -i namenode /bin/bash -c "
+            "docker exec -it namenode /bin/bash -c "
             "\"hadoop fs -test -d /user/hive/warehouse/concessionnaire.db/catalogue_table\""
         )
         result_check_hdfs = subprocess.run(check_hdfs_cmd, capture_output=True, text=True)
         if result_check_hdfs.returncode == 0:
             # Le répertoire existe, on le supprime
             delete_hdfs_cmd = (
-                "docker exec -i namenode /bin/bash -c "
+                "docker exec -it namenode /bin/bash -c "
                 "\"hadoop fs -rm -r -f /user/hive/warehouse/concessionnaire.db/catalogue_table\""
             )
             result_delete_hdfs = subprocess.run(delete_hdfs_cmd, capture_output=True, text=True, check=True)
@@ -94,7 +94,7 @@ def check_and_delete_hdfs_directory():
 def run_spark_for_cassandra_to_hive():
     print("Lancement du script Spark pour transférer les données de Cassandra vers Hive")
     try:
-        exec_bash_cmd = ["docker", "exec", "-i", "spark-master", "/bin/bash", "-c"]
+        exec_bash_cmd = ["docker", "exec", "-it", "spark-master", "/bin/bash", "-c"]
 
         spark_submit_cmd = (
             "/spark/bin/spark-submit "
