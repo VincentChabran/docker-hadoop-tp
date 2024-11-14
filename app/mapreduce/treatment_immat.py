@@ -58,13 +58,9 @@ def describe_columns(df, columns):
 def extract_model(df):
     modele_name_extract = regexp_extract(col("modele"), r'^([A-Za-z0-9\.-]+)', 1)
 
-    df = df.withColumn("modele_temp", trim(modele_name_extract))
+    df = df.withColumn("modele_simple", trim(modele_name_extract))
     
     df = df.drop("modele")
-    
-    cols = df.columns
-    marque_index = cols.index("marque")    
-    reordered_cols = cols[:marque_index + 1] + ["modele_temp"] + cols[marque_index + 1:]
 
     return df
 
