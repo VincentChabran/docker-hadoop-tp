@@ -4,8 +4,7 @@ reload(sys)
 sys.setdefaultencoding('utf-8')
 
 from pyspark.sql import SparkSession
-from pyspark.sql.functions import regexp_replace
-from pyspark.sql.functions import col, when
+from pyspark.sql.functions import regexp_replace, col, when
 
 
 
