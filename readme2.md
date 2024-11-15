@@ -45,13 +45,13 @@ select count(*) from marketing_table;
 
 ```bash
 
-docker exec -it spark-master /bin/bash
-
 /spark/bin/spark-submit --packages org.mongodb.spark:mongo-spark-connector_2.12:3.0.1 /spark_mongo.py
-
 
 /spark/bin/spark-submit /mapreduce/split_col_modele_marque_CO2.py
 /spark/bin/spark-submit /mapreduce/show_db.py
+
+docker exec -it spark-master /bin/bash
+
 /spark/bin/spark-submit /mapreduce/clean_client_et_marketing.py
 /spark/bin/spark-submit /mapreduce/treatment_immat.py
 /spark/bin/spark-submit /mapreduce/merge_client_immat.py
