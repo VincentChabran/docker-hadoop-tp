@@ -2,6 +2,7 @@ import subprocess
 
 from app.cassandraa.cassandra_client import execute_cassandra_operations
 
+
 def delete_hive_table_and_hdfs():
     """
     Supprime la table Hive existante et les fichiers HDFS associés.
@@ -39,7 +40,8 @@ def create_external_catalogue_table():
     print("Création de la table externe catalogue dans Hive")
     try:
         result = subprocess.run(
-            ["docker", "exec", "-it", "hive-server", "/bin/bash", "-c", "hive -e \"CREATE DATABASE IF NOT EXISTS concessionnaire; USE concessionnaire; DROP TABLE IF EXISTS catalogue_table; CREATE EXTERNAL TABLE IF NOT EXISTS catalogue_table (id STRING, marque STRING, nom STRING, puissance INT, longueur STRING, nbPlaces INT, nbPortes INT, couleur STRING, occasion BOOLEAN, prix FLOAT) STORED AS PARQUET LOCATION '/user/hive/warehouse/concessionnaire.db/catalogue_table';\""],
+            ["docker", "exec", "-i", "hive-server", "/bin/bash", "-c",
+             "hive -e \"CREATE DATABASE IF NOT EXISTS concessionnaire; USE concessionnaire; DROP TABLE IF EXISTS catalogue_table; CREATE EXTERNAL TABLE IF NOT EXISTS catalogue_table (id STRING, marque STRING, nom STRING, puissance STRING, longueur STRING, nbPlaces STRING, nbPortes STRING, couleur STRING, occasion STRING, prix STRING) STORED AS PARQUET LOCATION '/user/hive/warehouse/concessionnaire.db/catalogue_table';\""],
             capture_output=True, text=True, check=True)
         print("Résultat de la création de la table externe Hive :")
         print(result)
@@ -125,11 +127,11 @@ def orchestration_cassandra_task():
     # Étape 1 : Charger les données dans Cassandra depuis le fichier CSV
     execute_cassandra_operations("data/Catalogue.csv")
 
-    # # Étape 2 : Vérifier et supprimer la table existante si nécessaire
-    # check_and_delete_hive_table()
+    # Étape 2 : Vérifier et supprimer la table existante si nécessaire
+    check_and_delete_hive_table()
 
-    # # Étape 3 : Vérifier et supprimer le répertoire HDFS si nécessaire
-    # check_and_delete_hdfs_directory()
+    # Étape 3 : Vérifier et supprimer le répertoire HDFS si nécessaire
+    check_and_delete_hdfs_directory()
 
     # Étape 4 : Créer la table externe dans Hive
     create_external_catalogue_table()

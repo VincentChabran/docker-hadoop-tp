@@ -131,6 +131,23 @@ services:
       ports:
          - "8089:8089"
 
+   spark-notebook:
+      image: jupyter/all-spark-notebook
+      container_name: spark-notebook
+      depends_on:
+         - spark-master
+         - namenode
+         - datanode
+      ports:
+         - "8888:8888"
+      environment:
+         - SPARK_MASTER=spark://spark-master:7077
+         - CORE_CONF_fs_defaultFS=hdfs://namenode:9000
+      volumes:
+         - ./notebooks:/home/jovyan/work # Persist notebooks
+         - ./jars:/opt/spark/jars
+         - ./data:/data
+
    mongodb:
       image: mongo:latest
       container_name: mongodb
