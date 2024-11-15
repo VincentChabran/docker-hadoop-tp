@@ -69,10 +69,11 @@ df_client = df_client.na.drop(subset=["immatriculation"])
 # Afficher les valeurs distinctes de la colonne 'deuxiemevoiture'
 df_client.select("deuxiemevoiture").distinct().show()
 
-
-
 df_client.show()
 
 
 
 df_client.write.mode("overwrite").saveAsTable("client_processed")
+
+
+
