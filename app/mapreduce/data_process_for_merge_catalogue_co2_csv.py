@@ -18,6 +18,8 @@ def initialize_spark_session():
         .config("spark.hadoop.hive.metastore.uris", "thrift://hive-metastore:9083") \
         .enableHiveSupport() \
         .getOrCreate()  # Crée ou récupère la session Spark existante.
+    spark.sql("USE concessionnaire")
+
     spark.sparkContext.setLogLevel("ERROR")  # Réduit les logs pour afficher uniquement les erreurs.
     return spark  # Retourne la session Spark.
 
@@ -150,6 +152,14 @@ updated_catalogue_df = integrate_missing_data(catalogue_df, co2_df, averages_by_
 
 # Afficher le résultat final
 updated_catalogue_df.show(100)
+
+# Enregistrer le DataFrame dans Hive
+updated_catalogue_df.write.mode("overwrite").saveAsTable("catalogue_co2_merge_processed")
+print("Enregistrement dans Hive effectué avec succès.")
+updated_catalogue_df.show(500)
+
+
+
 
 # Arrêter la session Spark
 spark.stop()  # Arrête la session Spark.
