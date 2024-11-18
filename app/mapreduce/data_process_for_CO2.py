@@ -85,7 +85,18 @@ def dynamic_extract_brand(df, threshold=2):
     """
     df = add_first_words_columns(df)  # Ajouter les colonnes 'first_word' et 'first_two_words'
     top_brands = get_top_brands(df, threshold)  # Obtenir les marques les plus fréquentes
-    case_expr = extract_brand_case_expr(df, top_brands)  # Construire l'expression CASE
+
+    if not top_brands:
+        print("Aucune marque fréquente trouvée avec le seuil spécifié. La colonne 'marque' restera inchangée.")
+        return df.withColumn("marque", F.lit(None)).drop("first_word", "first_two_words")
+
+    case_expr = "CASE "
+    for brand in top_brands:
+        case_expr += "WHEN first_word = '{}' THEN '{}' ".format(brand, brand)
+        if " " in brand:
+            case_expr += "WHEN first_two_words = '{}' THEN '{}' ".format(brand, brand.split()[0])
+    case_expr += "ELSE NULL END"
+
     return df.withColumn("marque", F.expr(case_expr)).drop("first_word",
                                                            "first_two_words")  # Appliquer l'expression CASE
 
