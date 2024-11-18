@@ -64,7 +64,7 @@ def run_all_setup_from_hive():
     import_client_to_hive()
     create_and_populate_external_table_immat()
     create_and_populate_external_table_co2()
-    # create_external_co2_data_processed()
+    create_external_co2_data_processed()
 
     print("Orchestration dans Hive terminée.")
     
