@@ -32,7 +32,12 @@ show tables;
 use concessionnaire;
 
 select * from client_data limit 10;
-select count(*) from marketing_table;
+select * from immatriculations_data limit 10;
+select * from marketing_data limit 10;
+select count(*) from marketing_data;
+select count(*) from client_data;
+select count(*) from client_processed;
+select count(*) from client_immatriculation_merged;
 
 ```
 
