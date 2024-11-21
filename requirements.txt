@@ -1,5 +1,7 @@
-pandas
-pymongo
+pandas~=2.2.3
+pymongo~=4.10.1
 hdfs
-cassandra-driver
-pyspark
+cassandra-driver~=3.29.2
+pyspark~=3.5.3
+
+matplotlib~=3.9.2
