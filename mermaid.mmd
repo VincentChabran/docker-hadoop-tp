@@ -1,23 +1,22 @@
 graph LR
-    A[Création et évaluation du modèle]
+    A[Modèle final]
 
-    %% Algorithmes testés
-    A --> B[Algorithmes testés]
-    B --> C[Decision Tree Arbre de décision<br>]
-    B --> D[Random Forest]
-    B --> E[Logistic Regression Régression logistique]
+    %% Application du modèle
+    A --> B[Application aux données marketing]
+    B --> C[Prédictions basées les informations de Marketing]
 
-    %% Méthodologie
-    A --> F[Méthodologie]
-    F --> G[Jeu de validation<br>pour évaluer les algorithmes]
-    F --> H[Indicateurs de performance]
-    H --> I[Précision Accuracy]
-    H --> J[Matrice de confusion]
-    H --> K[Répartition des catégories prédites]
+    %% Résultats obtenus
+    A --> D[Résultats obtenus]
+    D --> E[Catégorie 0 Familiale]
+    D --> F[Catégorie 1 Sportive]
+    D --> G[Catégorie 2 Citadine]
+    D --> I[Catégorie 3 Autre]
+    D --> H[Catégorie 4 Citadine premium]
 
-    %% Résultat principal
-    A --> L[Résultat : Modèle retenu]
-    L --> M[Random Forest<br>Robustesse et précision de 72 %]
+    %% Mappage des catégories
+    A --> J[Mappage des catégories]
 
 
+    %% Transformation des catégories
+    J --> P[Transformation des catégories<br>en index pour le modèle]
 
