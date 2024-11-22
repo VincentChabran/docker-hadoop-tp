@@ -37,6 +37,7 @@ select * from marketing_data limit 10;
 select count(*) from marketing_data;
 select count(*) from client_data;
 select count(*) from client_processed;
+select count(*) from marketing_processed;
 select count(*) from client_immatriculation_merged;
 
 ```
